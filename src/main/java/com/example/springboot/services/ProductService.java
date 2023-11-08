@@ -5,6 +5,7 @@ import com.example.springboot.entities.Product;
 import com.example.springboot.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.UUID;
 
 
 @Service
@@ -22,6 +23,11 @@ public class ProductService {
     public void saveProduct(ProductRecordDto product){
         Product newProduct = new Product(product);
         productRepository.save(newProduct);
+        return;
+    }
+
+    public void deleteProduct(String id){
+        productRepository.deleteById(UUID.fromString(id));
         return;
     }
 }
