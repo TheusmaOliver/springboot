@@ -29,10 +29,8 @@ public class ProductService {
         return product.get();
     }
 
-    public void saveProduct(ProductRecordDto product){
-        Product newProduct = new Product(product);
-        productRepository.save(newProduct);
-        return;
+    public Product saveProduct(Product product){
+        return productRepository.save(product);
     }
 
     public void deleteProduct(String id){

@@ -3,12 +3,13 @@ package com.example.springboot.controllers;
 import com.example.springboot.dto.ProductRecordDto;
 import com.example.springboot.entities.Product;
 import com.example.springboot.services.ProductService;
+import jakarta.validation.Valid;
+import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -33,9 +34,10 @@ public class ProductController {
     }
 
     @PostMapping
-    public ResponseEntity<Void> saveProduct(@RequestBody ProductRecordDto product){
-        productService.saveProduct(product);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    public ResponseEntity<Object> saveProduct(@RequestBody @Valid ProductRecordDto productDto){
+        var newProduct = new Product(productDto);
+        BeanUtils.copyProperties(productDto, newProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(productService.saveProduct(newProduct));
     }
 
     @DeleteMapping("/{id}")
