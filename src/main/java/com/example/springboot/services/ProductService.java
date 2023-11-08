@@ -21,12 +21,8 @@ public class ProductService {
         return productRepository.findAll().stream().map(ProductRecordDto::new).toList();
     }
 
-    public Product getOneProduct(UUID id) throws Exception {
-        Optional<Product> product = productRepository.findById(id);
-        if(product.isEmpty()){
-           throw new Exception("Product not found!");
-        }
-        return product.get();
+    public Optional<ProductRecordDto> getOneProduct(UUID id)  {
+         return productRepository.findById(id).map(ProductRecordDto::new);
     }
 
     public Product saveProduct(Product product){

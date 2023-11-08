@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -28,9 +29,9 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ProductRecordDto> getOneProduct(@PathVariable(value = "id")UUID id) throws Exception {
-       Product product = productService.getOneProduct(id);
-       return ResponseEntity.status(HttpStatus.OK).body(new ProductRecordDto(product));
+    public ResponseEntity<Object> getOneProduct(@PathVariable(value = "id")UUID id) {
+       Optional<ProductRecordDto> product = productService.getOneProduct(id);
+        return product.<ResponseEntity<Object>>map(productRecordDto -> ResponseEntity.status(HttpStatus.OK).body(productRecordDto)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found!"));
     }
 
     @PostMapping
