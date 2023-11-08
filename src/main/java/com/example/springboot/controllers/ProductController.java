@@ -27,9 +27,9 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getOneProduct(@PathVariable(value = "id")UUID id) throws Exception {
+    public ResponseEntity<ProductRecordDto> getOneProduct(@PathVariable(value = "id")UUID id) throws Exception {
        Product product = productService.getOneProduct(id);
-        return ResponseEntity.status(HttpStatus.OK).body(new ProductRecordDto(product));
+       return ResponseEntity.status(HttpStatus.OK).body(new ProductRecordDto(product));
     }
 
     @PostMapping
