@@ -1,12 +1,14 @@
 package com.example.springboot.controllers;
 
 import com.example.springboot.dto.ProductRecordDto;
+import com.example.springboot.entities.Product;
 import com.example.springboot.services.ProductService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -22,6 +24,12 @@ public class ProductController {
     public ResponseEntity<List<ProductRecordDto>> getAllProducts(){
         List<ProductRecordDto> productList = productService.getAllProducts();
         return ResponseEntity.ok().body(productList);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Object> getOneProduct(@PathVariable(value = "id")UUID id) throws Exception {
+       Product product = productService.getOneProduct(id);
+        return ResponseEntity.status(HttpStatus.OK).body(new ProductRecordDto(product));
     }
 
     @PostMapping

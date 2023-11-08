@@ -5,6 +5,7 @@ import com.example.springboot.entities.Product;
 import com.example.springboot.repositories.ProductRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 
@@ -18,6 +19,14 @@ public class ProductService {
 
     public List<ProductRecordDto> getAllProducts(){
         return productRepository.findAll().stream().map(ProductRecordDto::new).toList();
+    }
+
+    public Product getOneProduct(UUID id) throws Exception {
+        Optional<Product> product = productRepository.findById(id);
+        if(product.isEmpty()){
+           throw new Exception("Product not found!");
+        }
+        return product.get();
     }
 
     public void saveProduct(ProductRecordDto product){
