@@ -1,10 +1,9 @@
 package com.example.springboot.services;
 
+import com.example.springboot.dto.ProductRecordDto;
 import com.example.springboot.entities.Product;
 import com.example.springboot.repositories.ProductRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 
@@ -16,7 +15,13 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAllProducts(){
-        return productRepository.findAll();
+    public List<ProductRecordDto> getAllProducts(){
+        return productRepository.findAll().stream().map(ProductRecordDto::new).toList();
+    }
+
+    public void saveProduct(ProductRecordDto product){
+        Product newProduct = new Product(product);
+        productRepository.save(newProduct);
+        return;
     }
 }

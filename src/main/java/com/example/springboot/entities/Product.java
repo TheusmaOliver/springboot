@@ -1,10 +1,8 @@
 package com.example.springboot.entities;
 
+import com.example.springboot.dto.ProductRecordDto;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serial;
 import java.io.Serializable;
@@ -13,8 +11,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "tb_products")
-@Getter @Setter
-@AllArgsConstructor @NoArgsConstructor
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 public class Product implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -24,4 +25,9 @@ public class Product implements Serializable {
     private UUID id;
     private String name;
     private BigDecimal price;
+
+    public Product(ProductRecordDto product) {
+        this.name = product.name();
+        this.price = product.price();
+    }
 }
