@@ -25,8 +25,9 @@ public class ProductService {
          return productRepository.findById(id).map(ProductRecordDto::new);
     }
 
-    public Product saveProduct(Product product){
-        return productRepository.save(product);
+    public ProductRecordDto saveProduct(Product product){
+        productRepository.save(product);
+        return new ProductRecordDto(product);
     }
 
     public void deleteProduct(String id){
